@@ -5,9 +5,10 @@
 //  Created by Jose Castellanos on 3/13/16.
 //  Copyright © 2016 NextGen Apps LLC. All rights reserved.
 //
-
-//TODO: Remove
 import Foundation
+//TODO: Remove
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):

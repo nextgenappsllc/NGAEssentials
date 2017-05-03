@@ -16,10 +16,10 @@
 		607FACE51AFB9204008FA782 /* NGAEssentials_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NGAEssentials_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		B63CF6711B26D764BBA9808D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B63CF6711B26D764BBA9808D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		BCD88DE1002C2A2672BF228D /* Pods-NGAEssentials_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NGAEssentials_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NGAEssentials_Tests/Pods-NGAEssentials_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		C40B522D0C9799F56476171A /* NGAEssentials.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = NGAEssentials.podspec; path = ../NGAEssentials.podspec; sourceTree = "<group>"; };
-		DD2A2A131ECD02C82F898B31 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		C40B522D0C9799F56476171A /* NGAEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = NGAEssentials.podspec; path = ../NGAEssentials.podspec; sourceTree = "<group>"; };
+		DD2A2A131ECD02C82F898B31 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F2206EB69D8A8ECBC8DC3759 /* Pods_NGAEssentials_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NGAEssentials_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -131,10 +131,6 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					607FACCF1AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0820;
-					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0820;
