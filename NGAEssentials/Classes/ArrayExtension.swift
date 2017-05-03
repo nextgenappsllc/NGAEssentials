@@ -288,7 +288,8 @@ fileprivate func equals<T:Equatable>(l:T,r:T) -> Bool{
 
 
 fileprivate func equals<T>(l:T,r:T) -> Bool{
-    guard let l = l as AnyObject?, let r = r as AnyObject? else {return false}
+    let l = l as AnyObject
+    let r = r as AnyObject
     return l === r
     
 }
