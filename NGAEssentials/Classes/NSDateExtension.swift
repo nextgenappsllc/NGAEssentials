@@ -20,7 +20,6 @@ public extension Date {
     
     
     public func toString(format:String? = nil) -> String? {
-//        if format == nil {return description}
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format ?? Date.defaultDateFormat
         return dateFormatter.string(from: self)
@@ -28,6 +27,10 @@ public extension Date {
     
     public func toStyledString(dateStyle ds:DateFormatter.Style = .medium, timeStyle ts:DateFormatter.Style = .medium) -> String? {
         return DateFormatter.localizedString(from: self, dateStyle: ds, timeStyle: ts)
+    }
+    
+    public func unixTimestamp() -> Int {
+        return self.timeIntervalSince1970.toInt()
     }
     
 }
