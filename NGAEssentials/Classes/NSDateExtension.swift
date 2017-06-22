@@ -30,7 +30,7 @@ public extension Date {
     }
     
     public func unixTimestamp() -> Int {
-        return self.timeIntervalSince1970.toInt()
+        return self.timeIntervalSince1970.rounded().toInt()
     }
     
 }
