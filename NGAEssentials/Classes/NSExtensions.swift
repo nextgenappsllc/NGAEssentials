@@ -14,14 +14,15 @@ import Foundation
 extension NSString {
     
     
-    class func stringFromHTMLString(_ htmlEncodedString:NSString) -> NSString {
-        var temp = htmlEncodedString
-        let attributedOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType]
-        let attributedString = NSAttributedString(string: htmlEncodedString as String, attributes: attributedOptions)
-        temp = attributedString.string as NSString
-        
-        return temp
-    }
+//    class func stringFromHTMLString(_ htmlEncodedString:NSString) -> NSString {
+//        var temp = htmlEncodedString
+//        let attributedOptions = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.html]
+//        // SWIFT4 ERROR: Seeing if I cna phase out completely
+////        let attributedString = NSAttributedString(string: htmlEncodedString as String, attributes: attributedOptions)
+////        temp = attributedString.string as NSString
+//        
+//        return temp
+//    }
     
     class func stringForURLFromString(_ stringToEncode:NSString) -> NSString {
         var temp = stringToEncode

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NGAEssentials'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'Convenience methods and extensions'
 
 # This description is used to generate tags and improve search results.
@@ -39,5 +39,5 @@ A bunch of convenience methods, extensions, and classes that I use in my project
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
     s.frameworks = 'UIKit', 'SystemConfiguration', 'CoreLocation', 'MapKit'
-    s.dependency 'CryptoSwift', '~> 0.6'
+    s.dependency 'CryptoSwift', '~> 0.7'
 end

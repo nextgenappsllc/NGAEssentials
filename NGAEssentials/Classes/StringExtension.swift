@@ -47,7 +47,8 @@ public extension String {
         var range = r
         let letterCount = characters.count
         if range.upperBound > letterCount { range = (range.lowerBound..<letterCount) }
-        return substring(with: characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound))
+//        return substring[characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound)]
+        return String(self[characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound)])
 //        var range = r
 //        let letterCount = characters.count
 //        if range.upperBound > letterCount { range.upperBound = letterCount }
@@ -173,25 +174,25 @@ public extension String {
         var position = startIndex
         // Find the next '&' and copy the characters preceding it to `result`:
         while let ampRange = self.range(of: "&", range: position ..< endIndex) {
-            result.append(self[position ..< ampRange.lowerBound])
+            result.append(String(self[position ..< ampRange.lowerBound]))
             position = ampRange.lowerBound
             // Find the next ';' and copy everything from '&' to ';' into `entity`
             if let semiRange = self.range(of: ";", range: position ..< endIndex) {
                 let entity = self[position ..< semiRange.upperBound]
                 position = semiRange.upperBound
-                if let decoded = HTMLEntities.decode(entity) {
+                if let decoded = HTMLEntities.decode(String(entity)) {
                     // Replace by decoded character:
                     result.append(decoded)
                 } else {
                     // Invalid entity, copy verbatim:
-                    result.append(entity)
+                    result.append(String(entity))
                 }
             } else {
                 // No matching ';'.
                 break
             }
         }
-        result.append(self[position ..< endIndex])
+        result.append(String(self[position ..< endIndex]))
         return result
     }
     
@@ -219,14 +220,14 @@ public extension String {
         return Date.date(from: self, withFormat: format)
     }
     
-    public func toAttributedString(_ attributes:[String:Any]?) -> NSAttributedString {
+    public func toAttributedString(_ attributes:[NSAttributedStringKey:Any]?) -> NSAttributedString {
         return NSAttributedString(string: self, attributes: attributes)
     }
     
     public func toAttributedString(font:UIFont?, color: UIColor?) -> NSAttributedString {
-        var attributes = [String:Any]()
-        attributes[NSFontAttributeName] = font
-        attributes[NSForegroundColorAttributeName] = color
+        var attributes = [NSAttributedStringKey:Any]()
+        attributes[NSAttributedStringKey.font] = font
+        attributes[NSAttributedStringKey.foregroundColor] = color
         return toAttributedString(attributes)
     }
 
@@ -654,7 +655,8 @@ private struct HTMLEntities {
     //    decodeNumeric("20ac", 16) --> "€"
     fileprivate static func decodeNumeric(_ string : String, base : Int32) -> Character? {
         let code = UInt32(strtoul(string, nil, base))
-        return Character(UnicodeScalar(code)!)
+        guard let scalar = UnicodeScalar(code) else {return nil}
+        return Character(scalar)
     }
     
     // Decode the HTML character entity to the corresponding
@@ -665,9 +667,11 @@ private struct HTMLEntities {
     //     decode("&foo;")    --> nil
     fileprivate static func decode(_ entity : String) -> Character? {
         if entity.hasPrefix("&#x") || entity.hasPrefix("&#X"){
-            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 3)), base: 16)
+            return decodeNumeric(String(entity[entity.index(entity.startIndex, offsetBy: 3)...]), base: 16)
+//            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 3)), base: 16)
         } else if entity.hasPrefix("&#") {
-            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 2)), base: 10)
+            return decodeNumeric(String(entity[entity.index(entity.startIndex, offsetBy: 2)...]), base: 10)
+//            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 2)), base: 10)
         } else {
             return HTMLEntities.characterEntities[entity]
         }

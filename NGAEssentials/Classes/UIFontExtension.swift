@@ -10,7 +10,7 @@ import Foundation
 
 public extension UIFont {
     
-    @nonobjc public static let attributeKey = NSFontAttributeName
+    @nonobjc public static let attributeKey = NSAttributedStringKey.font
     
     public func fitFontToSize(_ size:CGSize, forString string:String?) -> UIFont {
         if String.isEmptyOrNil(string) || size.width == 0 || size.height == 0 {
@@ -22,7 +22,7 @@ public extension UIFont {
         var testSize = CGSize.zero
         repeat {
             fontSize += increment
-            testSize =? string?.size(attributes: [UIFont.attributeKey: withSize(fontSize)])
+            testSize =? string?.size(withAttributes: [UIFont.attributeKey: withSize(fontSize)])
         } while testSize.height < size.height && testSize.width < size.width
         fontSize -= increment
         return withSize(fontSize)
