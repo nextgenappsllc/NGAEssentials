@@ -243,6 +243,7 @@ public extension String {
     
     public static let degrees = "°"
     
+    
     /**
      Encrypts the string with the given 32 bit key.
      
