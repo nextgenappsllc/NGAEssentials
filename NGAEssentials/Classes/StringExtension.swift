@@ -133,8 +133,6 @@ public extension String {
     }
     
     
-    
-    
     public func urlEncode() -> String {
         let charactersToEscape = "\\!*'();:@&=+$,/?%#[]\" "
         let allowedCharacters = CharacterSet(charactersIn: charactersToEscape).inverted
