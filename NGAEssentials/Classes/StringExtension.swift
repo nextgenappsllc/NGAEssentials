@@ -29,30 +29,34 @@ public extension String {
     }
     
     
-    public var characterArray:[Character] {get{return Array(characters)}}
-    public var substrings:[String] {get {return characterArray.mapToNewArray(iteratorBlock: { (element) -> String? in
-        return String(element)
-    })}}
+    public var substrings:[String] {
+        get {
+            return Array(self).mapToNewArray { (element) -> String? in
+                return String(element)
+            }
+        }
+    }
     
     public subscript (i: Int) -> String? {
-        get{return substrings.itemAtIndex(i)}
+        get{
+            guard let char = Array(self).itemAtIndex(i) else {
+                return nil
+            }
+            return String(char)
+        }
+    
         mutating set {
-            var arr = substrings
-            let _=arr.safeSet(i, toElement: newValue)
-            self = arr.joined(separator: "")
+            guard let str = newValue else {
+                return
+            }
+            var arr = Array(self)
+            arr.safeSet(i, toElement: Character(str))
+            self = String(arr)
         }
     }
     
     public subscript (r: Range<Int>) -> String {
-        var range = r
-        let letterCount = characters.count
-        if range.upperBound > letterCount { range = (range.lowerBound..<letterCount) }
-//        return substring[characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound)]
-        return String(self[characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound)])
-//        var range = r
-//        let letterCount = characters.count
-//        if range.upperBound > letterCount { range.upperBound = letterCount }
-//        return substring(with: characters.index(startIndex, offsetBy: range.lowerBound)..<characters.index(startIndex, offsetBy: range.upperBound))
+        return String(Array(self)[r])
     }
     
     
@@ -72,7 +76,7 @@ public extension String {
         return temp
     }
     
-    public var length:Int {get {return self.characters.count}}
+    public var length:Int {get {return self.count}}
     
     
     public var isValidEmailFormat:Bool {
@@ -117,7 +121,7 @@ public extension String {
     public func regexNumberOfMatches(_ pattern:String, patternOptions:NSRegularExpression.Options = NSRegularExpression.Options.init(rawValue: 0), matchingOptions:NSRegularExpression.MatchingOptions = NSRegularExpression.MatchingOptions.init(rawValue: 0)) -> Int? {
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: patternOptions)
-            return regex.numberOfMatches(in: self, options: matchingOptions, range: NSMakeRange(0, self.characters.count))
+            return regex.numberOfMatches(in: self, options: matchingOptions, range: NSMakeRange(0, self.count))
         } catch {
             return nil
         }
@@ -218,14 +222,14 @@ public extension String {
         return Date.date(from: self, withFormat: format)
     }
     
-    public func toAttributedString(_ attributes:[NSAttributedStringKey:Any]?) -> NSAttributedString {
+    public func toAttributedString(_ attributes:[NSAttributedString.Key:Any]?) -> NSAttributedString {
         return NSAttributedString(string: self, attributes: attributes)
     }
     
     public func toAttributedString(font:UIFont?, color: UIColor?) -> NSAttributedString {
-        var attributes = [NSAttributedStringKey:Any]()
-        attributes[NSAttributedStringKey.font] = font
-        attributes[NSAttributedStringKey.foregroundColor] = color
+        var attributes = [NSAttributedString.Key:Any]()
+        attributes[NSAttributedString.Key.font] = font
+        attributes[NSAttributedString.Key.foregroundColor] = color
         return toAttributedString(attributes)
     }
 
@@ -270,7 +274,7 @@ public extension String {
         let _key = key.utf8.map{$0} as Array<UInt8>
         let _iv = AES.randomIV(AES.blockSize)
         var t:(iv:String, encrypted:String?) = (_iv.toHexString(), nil)
-        guard _key.count == 32, let aes = try? AES.init(key: _key, blockMode: .CBC(iv: _iv)), let encrypted = try? aes.encrypt(Array(self.utf8)) else {return t}
+        guard _key.count == 32, let aes = try? AES(key: _key, blockMode: CBC(iv: _iv)), let encrypted = try? aes.encrypt(Array(self.utf8)) else {return t}
         t.encrypted = encrypted.toHexString()
         return t
     }
@@ -294,7 +298,7 @@ public extension String {
     public func AES256Decrypt(key:String, iv:String) -> String?{
         let _key = key.utf8.map{$0} as Array<UInt8>
         let _iv = iv.convertFromHex()
-        guard _key.count == 32, let aes = try? AES(key: _key, blockMode: .CBC(iv: _iv)), let decrypted = try? aes.decrypt(self.convertFromHex()) else {return nil}
+        guard _key.count == 32, let aes = try? AES(key: _key, blockMode: CBC(iv: _iv)), let decrypted = try? aes.decrypt(self.convertFromHex()) else {return nil}
         return String(data: Data(decrypted), encoding: .utf8)
     }
     

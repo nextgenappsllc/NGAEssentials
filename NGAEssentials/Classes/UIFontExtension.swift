@@ -10,7 +10,7 @@ import Foundation
 
 public extension UIFont {
     
-    @nonobjc public static let attributeKey = NSAttributedStringKey.font
+    @nonobjc public static let attributeKey = NSAttributedString.Key.font
     
     public func fitFontToSize(_ size:CGSize, forString string:String?) -> UIFont {
         if String.isEmptyOrNil(string) || size.width == 0 || size.height == 0 {

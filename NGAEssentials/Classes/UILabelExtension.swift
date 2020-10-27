@@ -57,54 +57,20 @@ public extension UILabel {
     }
     
     public func fadeInText(_ txt:String? = nil) {
-        let t = txt ?? text; let tArray = t?.substrings; let count = tArray?.count ?? 0
-        if count == 0 {return}
+        guard let t = txt ?? text else { return }
+        let tArray = Array(t)
+        let count = tArray.count
+        if count == 0 { return }
         text = nil
         
         var currentText = ""
-        
-        //        var duration:UInt64 = 0
-        //        let queue = dispatch_queue_create("labelqueue", DISPATCH_QUEUE_SERIAL)
-        //        for var i = 0; i < count; i++ {
-        ////            print("timer fired \(i) of \(count)")
-        //
-        //            let label = UILabel()
-        //            label.alpha = 0
-        //            label.backgroundColor = UIColor.clearColor()
-        //            label.font = self.font
-        //            label.textAlignment = self.textAlignment
-        //            label.textColor = self.textColor
-        //            label.numberOfLines = self.numberOfLines
-        //            label.frame = self.bounds
-        //
-        //            let delay = NSEC_PER_MSEC * duration
-        //            print(delay)
-        //            let index = i
-        //            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-        //                if let s = tArray?.itemAtIndex(index) {currentText += s}
-        //                label.text = currentText
-        //                self.addSubview(label)
-        //                //                    print("executing\(index) with delay \(delay)")
-        //                UIView.animateWithDuration(0.25, animations: { () -> Void in
-        //                    label.alpha = 1.0
-        //                    }, completion: { (b:Bool) -> Void in
-        //                        if label.text?.length ?? 0 > self.text?.length ?? 0 {
-        //                            self.text = label.text
-        //                        }
-        //                        label.removeFromSuperview()
-        //                        //                    if i >= count {self.text = t}
-        //                })
-        //
-        //            })
-        //
-        //            duration += 250
-        //
-        //        }
-        //
+
         var i = 0
         let timer = Timer.executeBlockWithDelay(0.2) { (timer:Timer?) -> Void in
-            print("timer fired \(i) of \(count)")
-            if let s = tArray?.itemAtIndex(i) {currentText += s}
+//            print("timer fired \(i) of \(count)")
+            if let s = tArray.itemAtIndex(i) {
+                currentText += String(s)
+            }
             let label = UILabel()
             label.alpha = 0
             label.backgroundColor = self.backgroundColor
@@ -125,7 +91,10 @@ public extension UILabel {
                     if i >= count {self.text = t}
             })
             i += 1
-            if i >= count {print("invalidate");timer?.invalidate()}
+            if i >= count {
+                timer?.invalidate()
+                
+            }
         }
         
         timer.fire()

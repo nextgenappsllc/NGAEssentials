@@ -12,9 +12,9 @@ import Foundation
 
 open class QueueWrapper {
     
-    open let queue:DispatchQueue
+    public let queue:DispatchQueue
     
-    open let queueKey:DispatchSpecificKey<Any> = DispatchSpecificKey<Any>()
+    public let queueKey:DispatchSpecificKey<Any> = DispatchSpecificKey<Any>()
     
     public init(_ queue:DispatchQueue){
         self.queue = queue
@@ -64,11 +64,11 @@ open class NGAExecute {
     
     static let queueWrapper = QueueWrapper(DispatchQueue.main)
     
-    open static func performOnMainQueue(async:Bool = true, _ b:VoidBlock?) {queueWrapper.performOnQueue(async: async, b)}
+    public static func performOnMainQueue(async:Bool = true, _ b:VoidBlock?) {queueWrapper.performOnQueue(async: async, b)}
     
-    open static var isMainQueue:Bool {get {return queueWrapper.isQueue}}
+    public static var isMainQueue:Bool {get {return queueWrapper.isQueue}}
     
-    open static func performOnMainThread(async:Bool = true, _ b:VoidBlock?) {
+    public static func performOnMainThread(async:Bool = true, _ b:VoidBlock?) {
         guard let b = b else {return}
         Thread.isMainThread ? b() : queueWrapper.queueExecute(async: async, b)
     }
